@@ -20,11 +20,11 @@ module.exports = function(grunt) {
             },
             html: {
                 files: [ 'app/html/*.html', 'app/html/**/*.html' ],
+                tasks:['htmlmin'],
                 options: {livereload: true }
             }
         },
         copy: {
-            
             css: {
                 expand: true,
                 cwd : 'app/style',
@@ -69,6 +69,17 @@ module.exports = function(grunt) {
                 }
             }
         },
+        htmlmin: {                                     // Task
+            dist: {                                      // Target
+                options: {                                 // Target options
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: {                                   // Dictionary of files
+                    'build/index.html' : 'app/html/index.html'
+                }
+            }
+        },
         browserSync: {
             bsFiles: {
                 src: [
@@ -98,13 +109,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
     
     // Load the plugins to run your tasks
     //require("load-grunt-tasks")(grunt, { scope: "devDependencies" });
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     
 
-    grunt.registerTask('default', 'html templates', ['copy', 'cssmin','uglify','browserSync',  'notify:server', 'watch']);
+    grunt.registerTask('default', ['copy', 'cssmin','uglify','htmlmin','browserSync',  'notify:server', 'watch']);
    // grunt.registerTask('purecss', 'convert into one', ['purifycss']);
 
 };
