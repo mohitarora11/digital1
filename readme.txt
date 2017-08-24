@@ -4,4 +4,4 @@ Use the following step to run this project
 2) npm install
 3) type grunt and press enter
 
-Note : To run this project you need to install node and grunt at system level.
+Note : To run this project you need to install node and grunt(npm install grunt) at system level.
