@@ -20,11 +20,9 @@ module.exports = function(grunt) {
             },
             html: {
                 files: [ 'app/html/*.html', 'app/html/**/*.html' ],
-                tasks: [ 'nunjucks'],
                 options: {livereload: true }
             }
         },
-
         copy: {
             
             css: {
@@ -34,12 +32,6 @@ module.exports = function(grunt) {
                 dest : 'build/css',
                 filter: 'isFile'
             },
-            /*js: {
-                expand: true,
-                cwd: 'app/js',
-                src: ['**'],
-                dest: 'build/js'
-            },*/
             images: {
                 expand: true,
                 cwd: 'app/images',
@@ -51,33 +43,6 @@ module.exports = function(grunt) {
                 cwd: 'app/fonts',
                 src: ['**'],
                 dest: 'build/fonts'
-            },
-        },
-        nunjucks : { // nunjucks task
-            options: {
-                data: grunt.file.readJSON("data.json"),
-            },
-            render: {
-                files: [{
-                    expand: true,
-                    cwd: "app/html",
-                    src: ["**/*.html"],
-                    dest: "build/",
-                    ext: ".html"
-                }]
-            }
-        },
-        imagemin: { // Task
-            dynamic: {
-                options: {
-                    optimizationLevel: 7
-                }, // Another target
-                files: [{
-                    expand: true, // Enable dynamic expansion
-                    cwd: 'app/images/', // Src matches are relative to this path
-                    src: ['{,*/}*.{png,jpg,gif,svg}'], // Actual patterns to match
-                    dest: 'build/images/' // Destination path prefix
-                }]
             }
         },
         cssmin : {
@@ -99,9 +64,9 @@ module.exports = function(grunt) {
         },
         uglify: {
             my_target: {
-              files: {
-                'build/js/digital.min.js': ['app/js/support/jquery-1.11.2.min.js', 'app/js/support/bootstrap.min.js','app/js/support/jquery.easypiechart.min.js','app/js/main.js']
-              }
+                files: {
+                    'build/js/digital.min.js': ['app/js/support/jquery-1.11.2.min.js', 'app/js/support/bootstrap.min.js','app/js/support/jquery.easypiechart.min.js','app/js/main.js']
+                }
             }
         },
         browserSync: {
@@ -118,27 +83,28 @@ module.exports = function(grunt) {
             }
         },
         notify: {
-            sass: {
-                options: {
-                    title: 'CSS Files built ',
-                    message: 'SCSS compile task complete'
-
-                }
-            },
             server: {
                 options: {
                     message: 'Server is ready!'
                 }
             }
-        },
+        }
     });
 
+    grunt.loadNpmTasks('grunt-npm-install');
+    grunt.loadNpmTasks('grunt-browser-sync');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-notify');
+    
     // Load the plugins to run your tasks
-    require("load-grunt-tasks")(grunt, { scope: "devDependencies" });
+    //require("load-grunt-tasks")(grunt, { scope: "devDependencies" });
     //grunt.loadNpmTasks('grunt-contrib-cssmin');
     
 
-    grunt.registerTask('default', 'html templates', [  'copy', 'nunjucks', 'cssmin','uglify','browserSync',  'notify:server', 'watch']);
+    grunt.registerTask('default', 'html templates', ['copy', 'cssmin','uglify','browserSync',  'notify:server', 'watch']);
    // grunt.registerTask('purecss', 'convert into one', ['purifycss']);
 
 };

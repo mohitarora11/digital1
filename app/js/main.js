@@ -28,28 +28,6 @@ $(document).ready(function ($) {
 
 
     /*---------------------------------------------*
-     * Easy Pie Chart
-     ---------------------------------------------*/
-
-
-
-    //$('.skills').waypoint(function () {
-        
-       /* $('.chart').easyPieChart({
-            animate: 2000,
-            scaleColor: false,
-            lineWidth: 4,
-            lineCap: 'square',
-            size: 130,
-            trackColor: false,
-            barColor: '#fff',
-            onStep: function (from, to, percent) {
-                $(this.el).find('.percent').text(Math.round(percent));
-            }
-        });*/
-    //});
-
-    /*---------------------------------------------*
      * Scroll Up Section
      ---------------------------------------------*/
 
